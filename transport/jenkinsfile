@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Sathya-1307/Dictionary-System.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('dict') { // replace 'dict' with your React project folder
+                    // Use direct path to Node.js installed on Windows
+                    bat '"C:\\Program Files\\nodejs\\npm.cmd" install'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('dict') {
+                    bat '"C:\\Program Files\\nodejs\\npm.cmd" run build'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "React project built successfully!"
+        }
+        failure {
+            echo "Build failed!"
+        }
+    }
+}
+
+
+

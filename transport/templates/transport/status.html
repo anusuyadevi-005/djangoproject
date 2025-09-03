@@ -1,0 +1,22 @@
+{% extends "transport/base.html" %}
+{% block content %}
+  <h2>Check Application Status</h2>
+  <form method="post">{% csrf_token %}
+    <label>Register No: <input type="text" name="regno"></label>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if passes %}
+    <h3>Applications</h3>
+    <table border="1">
+      <tr><th>Route</th><th>Status</th><th>Applied at</th></tr>
+      {% for p in passes %}
+      <tr>
+        <td>{{ p.route.route_no }} ({{ p.route.start_point }} → {{ p.route.end_point }})</td>
+        <td>{{ p.status }}</td>
+        <td>{{ p.applied_at }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+{% endblock %}

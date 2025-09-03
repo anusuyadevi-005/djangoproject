@@ -1,0 +1,20 @@
+{% extends "transport/base.html" %}
+{% block content %}
+  <h2>Route Allocations</h2>
+  <a href="{% url 'transport:export_csv' %}">Export CSV</a> |
+  <button onclick="window.print()">Print</button>
+  <hr>
+  {% for route, assigned in allocations %}
+    <h3>{{ route.route_no }} - {{ route.start_point }} → {{ route.end_point }} (Capacity: {{ route.capacity }})</h3>
+    {% if assigned %}
+      <table border="1">
+        <tr><th>Regno</th><th>Name</th></tr>
+        {% for bp in assigned %}
+          <tr><td>{{ bp.student.regno }}</td><td>{{ bp.student.name }}</td></tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No assigned students.</p>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

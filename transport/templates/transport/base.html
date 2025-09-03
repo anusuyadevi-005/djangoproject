@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bus Pass System</title>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'transport:apply' %}">Apply</a> |
+    <a href="{% url 'transport:status' %}">Check Status</a> |
+    <a href="{% url 'transport:admin_applications' %}">Transport Admin</a> |
+    <a href="{% url 'transport:allocations' %}">Allocations</a>
+  </nav>
+  <hr>
+  {% if messages %}
+    <ul>
+      {% for m in messages %}
+        <li>{{ m.tags }}: {{ m }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "transport/base.html" %}
+{% block content %}
+  <h2>Transport: Pending Applications</h2>
+  <table border="1">
+    <tr><th>Regno</th><th>Name</th><th>Route</th><th>Applied</th><th>Actions</th></tr>
+    {% for a in applications %}
+    <tr>
+      <td>{{ a.student.regno }}</td>
+      <td>{{ a.student.name }}</td>
+      <td>{{ a.route.route_no }} ({{ a.route.start_point }}→{{ a.route.end_point }})</td>
+      <td>{{ a.applied_at }}</td>
+      <td>
+        <form action="{% url 'transport:assign_pass' a.id %}" method="post" style="display:inline">{% csrf_token %}
+          <button type="submit">Assign</button>
+        </form>
+        <form action="{% url 'transport:reject_pass' a.id %}" method="post" style="display:inline">{% csrf_token %}
+          <button type="submit">Reject</button>
+        </form>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No pending applications.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}
